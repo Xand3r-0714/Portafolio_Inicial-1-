@@ -1,11 +1,48 @@
 body {
-  font-family: Arial;
+  margin: 0;
+  font-family: Arial, sans-serif;
   background: #0f172a;
   color: white;
-  text-align: center;
-  margin-top: 100px;
 }
 
-h1 {
+/* HERO CENTRADO REAL PRO */
+.hero {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+/* BOTONES */
+.buttons {
+  margin-top: 20px;
+}
+
+.buttons a {
+  text-decoration: none;
+  background: #38bdf8;
+  color: black;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.buttons .secondary {
+  background: transparent;
+  border: 2px solid #38bdf8;
   color: #38bdf8;
 }
