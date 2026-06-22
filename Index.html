@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alexander Ferreira | Portafolio</title>
+    <!-- Iconos externos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- VARIABLES Y CONFIGURACIÓN GENERAL --- */
+        :root {
+            --bg-color: #141414; /* Negro estilo Netflix */
+            --card-bg: #181818;
+            --accent-color: #E50914; /* Rojo Stark / Netflix */
+            --text-color: #FFFFFF;
+            --text-muted: #AAAAAA;
+            --font-family: 'Arial', sans-serif;
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR FLOTANTE (SCROLL) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            z-index: 1000;
+            transition: var(--transition-smooth);
+        }
+
+        /* Efecto cuando bajas la página */
+        body:has(> *:not(.navbar):target) .navbar, 
+        .navbar:hover, /* Simulación o respaldo visual */
+        header:not(:hover) ~ .navbar { 
+            background-color: rgba(20, 20, 20, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            padding: 15px 6%;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* --- INICIO / HERO SECTION --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 6%;
+            background: linear-gradient(to right, rgba(20,20,20,0.9) 30%, rgba(20,20,20,0.2) 100%), 
+                        url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1964&auto=format&fit=crop') no-repeat center center/cover;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 25px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 12px 28px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: var(--transition-smooth);
+            max-width: max-content;
+        }
+
+        .btn-primary:hover {
+            background-color: #b80710;
+            transform: scale(1.05);
+        }
+
+        /* --- SECCIONES GENERALES --- */
+        section {
+            padding: 60px 6%;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* --- SECCIÓN SOBRE MÍ --- */
+        .about-content {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+            max-width: 800px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .about-content h3 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .about-content ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .about-content ul li {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- PROYECTOS "NETFLIX STYLE" --- */
+        .projects-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            aspect-ratio: 16 / 9; /* Formato rectangular de miniatura */
+        }
+
+        .project-img-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #222, #333);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            color: var(--accent-color);
+            transition: var(--transition-smooth);
+        }
+
+        .project-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 70%, rgba(0,0,0,0) 100%);
+            transform: translateY(40px);
+            transition: var(--transition-smooth);
+            opacity: 0;
+        }
+
+        .project-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .project-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* EFECTO HOVER NETFLIX */
+        .project-card:hover {
+            transform: scale(1.08);
+            z-index: 10;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.7);
+        }
+
+        .project-card:hover .project-info {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .project-card:hover .project-img-placeholder {
+            filter: brightness(0.4);
+        }
+
+        /* --- SECCIÓN CONTACTO --- */
+        .contact-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background-color: var(--card-bg);
+            padding: 15px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .contact-item i {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+            width: 25px;
+            text-align: center;
+        }
+
+        .contact-item:hover {
+            background-color: #222;
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        /* --- ANIMACIONES Y RESPONSIVE --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Móvil Pro (Diseño Responsive) */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 4%;
+            }
+            .nav-links {
+                gap: 15px;
+            }
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+            .hero h1 {
+                font-size: 2.3rem;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .projects-row {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR FLOTANTE -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">Alexander F.</div>
+        <ul class="nav-links">
+            <li><a href="#sobre-mi">Sobre mí</a></li>
+            <li><a href="#proyectos">Proyectos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION / BIENVENIDA -->
+    <header class="hero">
+        <h1>Alexander Ferreira</h1>
+        <p>Desarrollador de Software enfocado en crear soluciones tecnológicas eficientes, interfaces intuitivas y sistemas optimizados.</p>
+        <a href="#proyectos" class="btn-primary"><i class="fa-solid fa-play"></i> Ver Proyectos</a>
+    </header>
+
+    <!-- SECCIÓN SOBRE MÍ (De image_1ec5ab.png) -->
+    <section id="sobre-mi">
+        <h2 class="section-title">📌 Sobre mí</h2>
+        <div class="about-content">
+            <h3>¿Quién soy?</h3>
+            <p>Hola, soy Alexander. Apasionado por la tecnología, el desarrollo de software y la personalización de alto rendimiento.</p>
+            
+            <h3 style="margin-top: 20px;">¿Qué estoy aprendiendo?</h3>
+            <p>Actualmente expandiendo conocimientos en lógica avanzada de programación, optimización de sistemas y diseño de interfaces modernas y dinámicas.</p>
+
+            <h3 style="margin-top: 20px;">¿Qué busco?</h3>
+            <p>Abierto a desafíos y oportunidades de **Trabajo Junior** donde pueda aportar valor con código limpio, ordenado y soluciones creativas.</p>
+        </div>
+    </section>
+
+    <!-- SECCIÓN PROYECTOS NETFLIX STYLE (De image_1ec602.png) -->
+    <section id="proyectos">
+        <h2 class="section-title">🎬 Mis Proyectos</h2>
+        <div class="projects-row">
+            
+            <!-- Tarjeta Proyecto 1 -->
+            <div class="project-card">
+                <div class="project-img-placeholder">
+                    <i class="fa-solid fa-bell"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Timbre Escolar Pro</h3>
+                    <p>Aplicación de escritorio automatizada con interfaz moderna y control de alertas.</p>
+                </div>
+            </div>
+
+            <!-- Tarjeta Proyecto 2 -->
+            <div class="project-card">
+                <div class="project-img-placeholder">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Proyecto ExpoStark</h3>
+                    <p>Sistema interactivo desarrollado especialmente para exhibición de tecnología.</p>
+                </div>
+            </div>
+
+            <!-- Tarjeta Proyecto 3 -->
+            <div class="project-card">
+                <div class="project-img-placeholder">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+                <div class="project-info">
+                    <h3>Windows Performance Optimizer</h3>
+                    <p>Scripts y ajustes personalizados para potenciar el rendimiento del sistema operativo.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECCIÓN CONTACTO (De image_1ec623.png) -->
+    <section id="contacto" style="margin-bottom: 80px;">
+        <h2 class="section-title">📞 Contacto</h2>
+        <div class="contact-container">
+            
+            <!-- Correo Real -->
+            <a href="mailto:jferreiralozano685@gmail.com" class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <span>jferreiralozano685@gmail.com</span>
+            </a>
+
+            <!-- Instagram Real (Acortado del tuyo para que funcione) -->
+            <a href="https://www.instagram.com/x_and3r._" target="_blank" class="contact-item">
+                <i class="fa-brands fa-instagram"></i>
+                <span>@x_and3r._</span>
+            </a>
+
+            <!-- Ubicación de tu perfil -->
+            <div class="contact-item" style="cursor: default;">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>Piedecuesta, Santander</span>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Pequeño Script JavaScript para el cambio de color del Navbar al hacer scroll -->
+    <script>
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(20, 20, 20, 0.98)';
+                navbar.style.padding = '15px 6%';
+            } else {
+                navbar.style.backgroundColor = 'transparent';
+                navbar.style.padding = '20px 6%';
+            }
+        });
+    </script>
+</body>
+</html>
